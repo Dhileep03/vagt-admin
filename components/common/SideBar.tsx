@@ -113,6 +113,7 @@
 // }
 
 // export default SideBar;
+
 "use client";
 import { useState } from "react";
 import Link from "next/link";
@@ -165,7 +166,7 @@ function SideBar({ isExpanded, toggleSidebar }: { isExpanded: boolean; toggleSid
           </span>
         </Link>
 
-        <nav className="flex flex-col items-start gap-4 mt-5">
+        <nav className="flex flex-col items-start gap-4 mt-12">
           {menuItems
             .filter((item) => !item.isBottom)
             .map(({ href, icon: Icon, label, isActive }) => (
@@ -179,7 +180,7 @@ function SideBar({ isExpanded, toggleSidebar }: { isExpanded: boolean; toggleSid
                 >
                   <Icon className="h-5 w-5" />
                   <span
-                    className={`ml-3 whitespace-nowrap transition-opacity duration-300 ${
+                    className={`ml-3  text-sm  whitespace-nowrap transition-opacity duration-300 ${
                       isExpanded ? "opacity-100" : "opacity-0"
                     }`}
                   >
