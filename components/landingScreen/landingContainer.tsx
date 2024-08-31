@@ -1,7 +1,7 @@
 "use client";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import {
   GaugeIcon,
   MountainIcon,
@@ -11,6 +11,13 @@ import {
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import LandingHeader from "./landingHeader";
+import FeatureCardCarousel from "@/components/common/featureCardCarousel";
+
+interface Feature {
+  title: string;
+  description: string;
+  image?: string;
+}
 
 export default function Component() {
   useEffect(() => {
@@ -31,8 +38,6 @@ export default function Component() {
     anchors.forEach((anchor) => {
       anchor.addEventListener("click", handleScroll);
     });
-
-    // Cleanup event listeners on component unmount
     return () => {
       anchors.forEach((anchor) => {
         anchor.removeEventListener("click", handleScroll);
@@ -40,119 +45,236 @@ export default function Component() {
     };
   }, []);
 
-  const features = [
+  const features: Feature[] = [
     {
-      icon: <GaugeIcon className="h-6 w-6" />,
-      title: "Fast and Reliable",
+      title: "GUARDING SERVICES",
       description:
-        "Our fast and reliable service ensures that your needs are met in a timely and efficient manner.",
+        "We have a team of professionally trained security personnel's securing an impressive clientele which includes Diplomatic Missions, IT Industry, Multinational Companies, Hotels, Industrial Units, Airlines & Airports, Financial & Educational Institutions, Malls & Multiplexes, BPOs and many more.",
+      image: "/security.png",
     },
     {
-      icon: <SettingsIcon className="h-6 w-6" />,
-      title: "Highly Customizable",
+      title: "EHS Audits",
       description:
-        "Customize everything to match your brand and requirements effortlessly.",
+        "These services relate to a wide range of areas - from environmental sustainability and occupational safety to chemical, radiation, and biological controls - that support the Institute's accountability for excellent EHS performance, as well as for legal compliance.",
+      image: "/cleaning.png", 
     },
     {
-      icon: <ShieldIcon className="h-6 w-6" />,
-      title: "Secure and Reliable",
+      title: "BCP Management",
       description:
-        "Our security measures ensure your data is protected at all times.",
+        "We identify which systems and processes must be sustained, and provide a detailed report of how to maintain them. We guide industries to tackle natural disasters and human error. It is vital for an organization to have a business continuity plan to preserve its health and reputation. A proper BCP decreases the chance of a costly outage.",
+      image: "/BCP.png", // Replace with the path to your image
     },
     {
-      icon: <RocketIcon className="h-6 w-6" />,
-      title: "Scalable and Flexible",
+      title: "Trainings",
+      description: `
+        Physical Security Training,
+        Electronic Security Training,
+        ISMS,
+        ERT,
+        EHS,
+        ISMS,
+        Soft skills,
+        Emergency Evacuation drills
+      `,
+      image: "/training.png", // Replace with the path to your image
+    },
+    {
+      title: "Security Audits",
       description:
-        "Scale your operations with a flexible solution that grows with you.",
+        "Conducting comprehensive physical inspection and evaluation of all security systems, controls, and their parameters in a particular public/private property, asset of an organization. Also providing a detailed analysis report with remedial action. Based on the audit, we propose optimization of manpower by implementing technology in place.",
+      image: "/Audit.png", // Replace with the path to your image
+    },
+    {
+      title: "PR AND LIAISON SUPPORT",
+      description:
+        "We provide Public relations (PR) as a distinctive management function that helps establish relationships between organizations. We also provide Liaising services to our clients.",
+      image: "/support.png", // Replace with the path to your image
+    },
+    {
+      title: "Electronics Security solution",
+      description:
+        "We provide service and external product offerings of CCTV cameras, access control systems, entry automation solutions, intrusion detection systems, metal detection solutions, fire detection, and public address systems. Our end-to-end services take care of everything from conducting surveys, analyzing requirements, designing solutions to implementing and installing electronic security solutions.",
+      image: "/electric.png", // Replace with the path to your image
+    },
+    {
+      title: "Other Services",
+      description: `
+        FM services for Residential and Commercial complexes,
+        Office upkeep and maintenance,
+        Electrical maintenance,
+        Plumbing maintenance,
+        STP & WTP maintenance services,
+        Rodent & Pest control
+      `,
+      image: "/services.png", // Replace with the path to your image
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="fixed top-0 left-0 w-full z-10">
         <LandingHeader />
       </div>
 
       <main className="flex-1 overflow-y-auto">
-        <section id="home" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="home" className="w-full py-12 md:py-24 lg:py-32 bg-white">
           <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-12">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                Introducing our latest product
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-blue-900">
+                VAGT Security Services Pvt Ltd,
               </h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Our new product is designed to revolutionize the way you work.
-                With advanced features and seamless integration, it's the
-                perfect solution for your business.
+                To work closely with our customers for providing world-class
+                security services with optimized solutions.
               </p>
-            </div>
-            <img
+              <motion.p
+                className="text-blue-600 font-semibold"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 2 }}
+              >
+                " Your Satisfaction is Our Priority "
+              </motion.p>
+            </motion.div>
+            <motion.img
               src="/landingimage.png"
               width="550"
               height="310"
               alt="Product"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last shadow-lg"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
             />
           </div>
         </section>
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12 px-4 md:px-6">
-            <div className="flex flex-col justify-center space-y-4 text-left">
+
+        <section id="whyus" className="w-full py-12 md:py-24 lg:py-32 bg-white">
+          <div className="container px-4 md:px-6 lg:px-8">
+            <motion.h2
+              className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-center mb-12 text-blue-900"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Why Us
+            </motion.h2>
+            <motion.div
+              className="grid gap-6 lg:grid-cols-3"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {[
+                {
+                  title: "Quality Service",
+                  content:
+                    "We at VAGT Security Services are dedicated to providing quality service to our esteemed customers.",
+                },
+                {
+                  title: "Integrated Solutions",
+                  content:
+                    "We offer complete security and safety audit solutions.",
+                },
+                {
+                  title: "Capability",
+                  content:
+                    "We are equipped to provide solutions for observations and non-conformity.",
+                },
+                {
+                  title: "Industry Experience",
+                  content:
+                    "We optimize manpower through the implementation of technology.",
+                },
+                {
+                  title: "Experienced Leadership",
+                  content:
+                    "Our directors bring 25 years of industry experience.",
+                },
+                {
+                  title: "Rigorous Training",
+                  content:
+                    "We ensure quality through robust training for security staff.",
+                },
+              ].map((item, index) => (
+                <motion.div key={index} variants={itemVariants}>
+                  <Card className="border-2 border-blue-200 rounded-lg h-[200px] flex flex-col justify-between relative overflow-hidden group transition-all duration-300 hover:shadow-xl hover:scale-105">
+                    <CardHeader
+                      className="flex flex-col items-center text-center gap-2 relative z-10 transition-transform duration-500 group-hover:-translate-x-full"
+                      style={{
+                        zIndex: "1",
+                        position: "relative",
+                      }}
+                    >
+                      <motion.div
+                        className="rounded-full bg-blue-100 p-3 text-blue-600"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {/* {item.icon} */}
+                      </motion.div>
+                      <CardTitle className="text-xl font-bold mt-2 text-blue-900">
+                        {item.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="absolute inset-0 flex items-center justify-center text-black opacity-0 transition-all duration-500 group-hover:opacity-100">
+                      <p className="text-center px-4">{item.content}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+        <section
+          id="features"
+          className="w-full py-12 md:py-24 lg:py-32 bg-white"
+        >
+          <div className="container flex flex-col lg:flex-row items-stretch gap-12 px-4 md:px-6">
+            <div className="lg:w-1/4 flex flex-col justify-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                  Discover our amazing features
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  Our Services
                 </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[600px] text-muted-foreground md:text-xl lg:text-base xl:text-xl">
                   Our product is packed with features that will make your life
                   easier. Check out what we have to offer.
                 </p>
               </div>
             </div>
-            <div className="grid items-start gap-12 sm:max-w-4xl sm:grid-cols-2 md:gap-16 lg:max-w-5xl lg:grid-cols-2">
-              {features.map((feature, index) => (
-                <Card
-                  key={index}
-                  className="border border-primary rounded-lg h-[200px] flex flex-col justify-between relative overflow-hidden group"
-                >
-                  <CardHeader className="flex flex-col items-center text-center gap-2 relative z-10 transition-transform duration-500 group-hover:-translate-x-full">
-                    <div className="rounded-full bg-primary p-2 text-primary-foreground">
-                      {feature.icon}
-                    </div>
-                    <CardTitle className="text-xl font-bold mt-2">
-                      {feature.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="absolute inset-0 flex items-center justify-center bg-primary/50 text-black transition-transform duration-500 ease-in-out group-hover:translate-x-0 group-hover:blur-none group-hover:backdrop-blur-md">
-                    <p className="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      {feature.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="lg:w-3/4 w-full flex items-center">
+              <FeatureCardCarousel features={features} />
             </div>
-          </div>
-        </section>
-        <section id="about" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-12">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                About Us
-              </h2>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                We are dedicated to providing exceptional services and solutions. Our team is committed to innovation and customer satisfaction. Learn more about our mission, values, and the people behind our success.
-              </p>
-            </div>
-            <img
-              src="/aboutus.png"
-              width="550"
-              height="310"
-              alt="About Us"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center"
-            />
           </div>
         </section>
       </main>
-      <footer id="contact" className="bg-muted p-6 md:py-12">
+      <footer
+        id="contact"
+        className="bg-blue-900 text-white w-full py-12 md:py-24 lg:py-32"
+      >
         <div className="container max-w-7xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 text-sm">
           <div className="grid gap-1">
             <h3 className="font-semibold">Company</h3>
