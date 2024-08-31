@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
-import { credentialLoginSchema } from "../schemas/intex";
+import { credentialLoginSchema } from "../schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "../config/const";
 
 interface responseData {

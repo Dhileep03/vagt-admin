@@ -31,3 +31,31 @@ export const phoneLoginSchema = z.object({
     .min(10, "Enter a valid phone number")
     .max(10, "Enter a valid phone number"),
 });
+
+
+export const waterTankerSchema = z.object({
+  id: z.number().optional(),
+  timeIn: z.date(),
+  timeOut: z.date(),
+  quantity: z.number().min(1, 'Quantity must be at least 1'),
+});
+
+
+export const vehicleTypeEnum = z.enum([
+  'Car', 
+  'Truck', 
+  'Bike', 
+  'Van', 
+  'Bus', 
+  'Tractor', 
+  'Trailer', 
+  'Other'
+]);
+
+export const VehiclePassSchema = z.object({
+  id: z.number().optional(),
+  vehicleNo: z.string().min(1, 'Vehicle number is required'),
+  issueDate: z.date(),
+  expiryDate: z.date(),
+  vehicleType: vehicleTypeEnum,
+});

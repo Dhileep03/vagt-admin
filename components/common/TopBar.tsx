@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { menuItems } from "../../config/const";
+import { Items } from "../../config/const";
 import {
   MenuIcon,
   MountainIcon,
@@ -56,7 +56,7 @@ function TopBar() {
               <span className="sr-only">Acme Inc</span>
             </Link>
             {/* Dynamically render menu items */}
-            {menuItems.map(({ href, icon: Icon, label, isActive }) => (
+            {Items.map(({ href, icon: Icon, label, isActive }) => (
               <Link
                 key={label}
                 href={href}

@@ -1,5 +1,5 @@
 import { createUser, getAllUser } from "@/dbconnector/userconnector";
-import { UserSchema } from "@/schemas/intex";
+import { UserSchema } from "@/schemas";
 
 //CREATE USER
 export async function POST(req: Request) {
