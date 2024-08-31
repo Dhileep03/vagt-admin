@@ -11,7 +11,7 @@ export default function LandingHeader() {
   };
 
   return (
-    <header className="bg-primary text-primary-foreground">
+    <header className="bg-blue-950 text-primary-foreground">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="#" className="flex items-center gap-2" prefetch={false}>
           <span className="text-lg font-semibold">VAGT</span>
@@ -19,6 +19,9 @@ export default function LandingHeader() {
         <nav className="hidden space-x-4 md:flex">
           <Link href="#home" className="hover:underline" prefetch={false}>
             Home
+          </Link>
+          <Link href="#whyus" className="hover:underline" prefetch={false}>
+            Why Us
           </Link>
           <Link href="#features" className="hover:underline" prefetch={false}>
             Features
