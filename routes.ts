@@ -4,7 +4,7 @@
  * @type {string[]}
  */
 
-export const publicRoutes = ["/access-denied"];
+export const publicRoutes = ["/access-denied","/vehicle","/user","/dashboard","/society","/guest","/watertruck","/apartment"];
 
 /**
  * An array of routes that are used for authendication
@@ -25,7 +25,7 @@ export const apiAuthPrefix = "/api";
  * @type {string}
  */
 
-export const DEFAULT_LOGIN_REDIRECT = "/user";
+export const DEFAULT_LOGIN_REDIRECT = "/";
 
 /**
  * An array of routes that are used for authendication

@@ -2,7 +2,7 @@
 
 import { userFindByUserName } from "../../../../dbconnector/userconnector";
 import { passwordVerify } from "../../../../dbconnector/loginconnector";
-import { credentialLoginSchema } from "../../../../schemas/intex";
+import { credentialLoginSchema } from "../../../../schemas";
 
 export async function POST(req: Request) {
   try {

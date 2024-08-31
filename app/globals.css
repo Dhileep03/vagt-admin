@@ -21,7 +21,7 @@ body {
 
 @layer base {
   :root {
-    --theme:224, 71.4%, 4.1%;
+    --theme: 10, 100%, 67%;
     --theme-foreground:213.29999999999995, 96.9%, 87.3%;
     
     --background: 0 0% 100%;

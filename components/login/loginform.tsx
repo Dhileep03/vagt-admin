@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useState } from "react";
-import { credentialLoginSchema,phoneLoginSchema } from "../../schemas/intex";
+import { credentialLoginSchema,phoneLoginSchema } from "../../schemas";
 import Link from "next/link";
 import { Axios } from "@/lib/axios";
 import { toast } from "sonner";
