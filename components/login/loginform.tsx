@@ -17,7 +17,7 @@ import Link from "next/link";
 import { Axios } from "@/lib/axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Login } from "../../uiconnector/loginAction";
+import { Login } from "../../action-data/loginAction";
 
 const LoginPage = () => {
   const router = useRouter();

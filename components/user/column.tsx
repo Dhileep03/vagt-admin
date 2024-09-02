@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { UserForm } from "./userAddForm";
 import DeleteConfirmationDialog from "@/components/common/deleteConfirmation";
-import { deleteUser } from "../../uiconnector/userAction";
+import { deleteUser } from "../../action-data/userAction";
 import { toast } from "sonner";
 import { useTransition } from "react";
 import { MdDelete } from "react-icons/md";

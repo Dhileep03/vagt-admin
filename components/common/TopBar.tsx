@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { UserData } from "@/types";
-import {getSingleUser} from "@/uiconnector/userAction";
+import {getSingleUser} from "@/action-data/userAction";
 import { FaUser } from "react-icons/fa";
 
 function TopBar() {
