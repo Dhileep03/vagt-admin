@@ -4,8 +4,10 @@ import axios from "axios";
 // const cookieStore = cookies();
 // const token = cookieStore.get("token");
 
+const baseURL = "https://vagt-api.onrender.com/api" || "";
+
 export const Axios = axios.create({
-  baseURL: "http://localhost:3000/api/",
+  baseURL,
   //   headers: {
   //     Authorization: `${token?.value}`,
   //   },

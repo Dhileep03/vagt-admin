@@ -33,7 +33,7 @@ import { ClockLoader } from "react-spinners";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserData } from "@/types";
 import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
-import { createUser, updateUser } from "../../uiconnector/userAction";
+import { createUser, updateUser } from "../../action-data/userAction";
 import { useSession } from "next-auth/react";
 
 interface UserFormProps {

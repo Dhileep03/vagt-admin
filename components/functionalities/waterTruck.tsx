@@ -1,3 +1,363 @@
+// "use client";
+// import React, { useState, useEffect } from "react";
+// import { Button } from "@/components/ui/button";
+// import {
+//   PlusCircle,
+//   Search,
+//   Edit2,
+//   Trash2,
+//   ChevronLeft,
+//   ChevronRight,
+// } from "lucide-react";
+// import { Input } from "@/components/ui/input";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { format, parseISO } from "date-fns";
+// import Image from "next/image";
+// import { toast } from "sonner";
+// import {
+//   getAllWatertanker,
+//   createWatertanker,
+//   updateWatertanker,
+//   deleteWatertanker
+// } from "@/action-data/watertankerAction";
+
+// interface WaterTruck {
+//   id?: string;
+//   timeIn: string;
+//   timeOut: string;
+//   quantity: number;
+// }
+
+// export default function WaterTruck() {
+//   const [trucks, setTrucks] = useState<WaterTruck[]>([]);
+//   const [editingTruck, setEditingTruck] = useState<WaterTruck | null>(null);
+//   const [newTruck, setNewTruck] = useState<WaterTruck>({
+//     timeIn: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+//     timeOut: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+//     quantity: 0,
+//   });
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 10;
+
+//   useEffect(() => {
+//     fetchTrucks();
+//   }, []);
+
+//   const fetchTrucks = async () => {
+//     try {
+//       const response = await getAllWatertanker();
+//       if (response.error) {
+//         throw new Error(response.error);
+//       }
+//       setTrucks(response);
+//     } catch (error) {
+//       console.error('Error fetching water trucks:', error);
+//       toast.error('Failed to load water trucks');
+//     }
+//   };
+
+//   const handleInputChange = (
+//     e: React.ChangeEvent<HTMLInputElement>
+//   ) => {
+//     const { name, value } = e.target;
+//     if (editingTruck) {
+//       setEditingTruck({
+//         ...editingTruck,
+//         [name]: name === "quantity" ? Number(value) : value,
+//       });
+//     } else {
+//       setNewTruck({
+//         ...newTruck,
+//         [name]: name === "quantity" ? Number(value) : value,
+//       });
+//     }
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     try {
+//       const truckData = editingTruck || newTruck;
+//       const formattedTruck = {
+//         ...truckData,
+//         timeIn: new Date(truckData.timeIn).toISOString(),
+//         timeOut: new Date(truckData.timeOut).toISOString(),
+//       };
+
+//       if (editingTruck && editingTruck.id) {
+//         const response = await updateWatertanker(editingTruck.id, formattedTruck);
+//         if (response.error) {
+//           throw new Error(response.error);
+//         }
+//         toast.success('Water truck updated successfully');
+//         setEditingTruck(null);
+//       } else {
+//         const response = await createWatertanker(formattedTruck);
+//         if (response.error) {
+//           throw new Error(response.error);
+//         }
+//         toast.success('Water truck added successfully');
+//         setNewTruck({
+//           timeIn: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+//           timeOut: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+//           quantity: 0,
+//         });
+//       }
+//       fetchTrucks();
+//     } catch (error) {
+//       console.error('Error submitting water truck:', error);
+//       toast.error('Failed to save water truck');
+//     }
+//   };
+
+//   const handleEdit = (truck: WaterTruck) => {
+//     setEditingTruck({
+//       ...truck,
+//       timeIn: format(parseISO(truck.timeIn), "yyyy-MM-dd'T'HH:mm"),
+//       timeOut: format(parseISO(truck.timeOut), "yyyy-MM-dd'T'HH:mm"),
+//     });
+//   };
+
+//   const handleDelete = async (id: string) => {
+//     try {
+//       const response = await deleteWatertanker(id);
+//       if (response.error) {
+//         throw new Error(response.error);
+//       }
+//       toast.success('Water truck deleted successfully');
+//       fetchTrucks();
+//     } catch (error) {
+//       console.error('Error deleting water truck:', error);
+//       toast.error('Failed to delete water truck');
+//     }
+//   };
+
+//   const filteredTrucks = trucks.filter(
+//     (truck) =>
+//       truck.id?.toString().includes(searchTerm) ||
+//       truck.quantity.toString().includes(searchTerm) ||
+//       format(parseISO(truck.timeIn), "yyyy-MM-dd").includes(searchTerm) ||
+//       format(parseISO(truck.timeOut), "yyyy-MM-dd").includes(searchTerm)
+//   );
+
+//   const totalPages = Math.ceil(filteredTrucks.length / itemsPerPage);
+//   const paginatedTrucks = filteredTrucks.slice(
+//     (currentPage - 1) * itemsPerPage,
+//     currentPage * itemsPerPage
+//   );
+
+//   useEffect(() => {
+//     setCurrentPage(1);
+//   }, [searchTerm]);
+
+//   const TruckForm = ({
+//     truck,
+//     onSubmit,
+//     isEditing,
+//   }: {
+//     truck: WaterTruck;
+//     onSubmit: (e: React.FormEvent) => void;
+//     isEditing: boolean;
+//   }) => (
+//     <form onSubmit={onSubmit} className="space-y-4">
+//       <Table>
+//         <TableBody>
+//           <TableRow>
+//             <TableCell>Time In</TableCell>
+//             <TableCell>
+//               <Input
+//                 name="timeIn"
+//                 type="datetime-local"
+//                 value={truck.timeIn}
+//                 onChange={handleInputChange}
+//                 required
+//               />
+//             </TableCell>
+//           </TableRow>
+//           <TableRow>
+//             <TableCell>Time Out</TableCell>
+//             <TableCell>
+//               <Input
+//                 name="timeOut"
+//                 type="datetime-local"
+//                 value={truck.timeOut}
+//                 onChange={handleInputChange}
+//                 required
+//               />
+//             </TableCell>
+//           </TableRow>
+//           <TableRow>
+//             <TableCell>Quantity (Liters)</TableCell>
+//             <TableCell>
+//               <Input
+//                 name="quantity"
+//                 type="number"
+//                 value={truck.quantity}
+//                 onChange={handleInputChange}
+//                 required
+//               />
+//             </TableCell>
+//           </TableRow>
+//         </TableBody>
+//       </Table>
+//       <div className="flex justify-end space-x-2">
+//         <Button
+//           type="submit"
+//           className="bg-green-500 hover:bg-green-600 text-white"
+//         >
+//           {isEditing ? "Update" : "Add"}
+//         </Button>
+//         {isEditing && (
+//           <Button
+//             type="button"
+//             onClick={() => setEditingTruck(null)}
+//             className="bg-red-500 hover:bg-red-600 text-white"
+//           >
+//             Cancel
+//           </Button>
+//         )}
+//       </div>
+//     </form>
+//   );
+
+//   return (
+//     <div className="h-[90vh] bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+//       <Card className="w-full mx-auto bg-white rounded-xl overflow-hidden">
+//         <CardHeader className="text-blue-700 p-2">
+//           <CardTitle className="text-lg font-bold">
+//             Water Truck Management
+//           </CardTitle>
+//         </CardHeader>
+//         <CardContent className="p-5 flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
+//           {/* Forms Column */}
+//           <div className="w-full lg:w-1/3 flex flex-col">
+//             <div className="mb-4">
+//               <h2 className="text-xl font-semibold mb-2 text-blue-700">
+//                 {editingTruck ? "Edit Water Truck Entry" : "Add New Water Truck Entry"}
+//               </h2>
+//               <TruckForm
+//                 truck={editingTruck || newTruck}
+//                 onSubmit={handleSubmit}
+//                 isEditing={!!editingTruck}
+//               />
+//             </div>
+//             {!editingTruck && (
+//               <div className="flex justify-center">
+//                 <Image
+//                   src="/watertruck.png"
+//                   alt="Water Truck"
+//                   width={300}
+//                   height={200}
+//                 />
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Table Column */}
+//           <div className="w-full lg:w-2/3 flex flex-col">
+//             <div className="mb-2 flex justify-between items-center">
+//               <h2 className="text-xl font-semibold text-blue-700">
+//                 Water Truck Entries
+//               </h2>
+//               <Input
+//                 type="text"
+//                 placeholder="Search entries..."
+//                 value={searchTerm}
+//                 onChange={(e) => setSearchTerm(e.target.value)}
+//                 className="max-w-xs"
+//               />
+//             </div>
+//             <div className="flex-grow overflow-auto">
+//               <Table className="w-full">
+//                 <TableHeader>
+//                   <TableRow className="bg-blue-100">
+//                     <TableHead className="font-semibold">Date In</TableHead>
+//                     <TableHead className="font-semibold">Time In</TableHead>
+//                     <TableHead className="font-semibold">Date Out</TableHead>
+//                     <TableHead className="font-semibold">Time Out</TableHead>
+//                     <TableHead className="font-semibold">Quantity (L)</TableHead>
+//                     <TableHead className="font-semibold">Actions</TableHead>
+//                   </TableRow>
+//                 </TableHeader>
+//                 <TableBody>
+//                   {paginatedTrucks.map((truck) => (
+//                     <TableRow key={truck.id} className="h-8">
+//                       <TableCell className="py-1">
+//                         {format(parseISO(truck.timeIn), "MM/dd/yyyy")}
+//                       </TableCell>
+//                       <TableCell className="py-1">
+//                         {format(parseISO(truck.timeIn), "HH:mm")}
+//                       </TableCell>
+//                       <TableCell className="py-1">
+//                         {format(parseISO(truck.timeOut), "MM/dd/yyyy")}
+//                       </TableCell>
+//                       <TableCell className="py-1">
+//                         {format(parseISO(truck.timeOut), "HH:mm")}
+//                       </TableCell>
+//                       <TableCell className="py-1">{truck.quantity}</TableCell>
+//                       <TableCell className="py-1">
+//                         <Button
+//                           variant="ghost"
+//                           size="sm"
+//                           onClick={() => handleEdit(truck)}
+//                         >
+//                           <Edit2 className="w-4 h-4 text-blue-500" />
+//                         </Button>
+//                         <Button
+//                           variant="ghost"
+//                           size="sm"
+//                           onClick={() => truck.id && handleDelete(truck.id)}
+//                         >
+//                           <Trash2 className="w-4 h-4 text-red-500" />
+//                         </Button>
+//                       </TableCell>
+//                     </TableRow>
+//                   ))}
+//                 </TableBody>
+//               </Table>
+//             </div>
+//             {/* Pagination */}
+//             <div className="flex justify-between items-center mt-4">
+//               <span>
+//                 Page {currentPage} of {totalPages}
+//               </span>
+//               <div>
+//                 <Button
+//                   onClick={() =>
+//                     setCurrentPage((prev) => Math.max(prev - 1, 1))
+//                   }
+//                   disabled={currentPage === 1}
+//                   className="mr-2"
+//                 >
+//                   <ChevronLeft className="w-4 h-4" />
+//                 </Button>
+//                 <Button
+//                   onClick={() =>
+//                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+//                   }
+//                   disabled={currentPage === totalPages}
+//                 >
+//                   <ChevronRight className="w-4 h-4" />
+//                 </Button>
+//               </div>
+//             </div>
+//           </div>
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// }
+
+
+
 "use client";
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -8,7 +368,6 @@ import {
   Trash2,
   ChevronLeft,
   ChevronRight,
-  X,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,97 +379,139 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { format } from "date-fns";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { format, parseISO } from "date-fns";
 import Image from "next/image";
+import { toast } from "sonner";
+import {
+  getAllWatertanker,
+  createWatertanker,
+  updateWatertanker,
+  deleteWatertanker
+} from "@/action-data/watertankerAction";
 
 interface WaterTruck {
-  id: number;
-  truckId: string;
-  timeIn: Date;
-  timeOut: Date;
+  id?: string;
+  timeIn: string;
+  timeOut: string;
   quantity: number;
 }
 
-const sampleTrucks: WaterTruck[] = [
-  { id: 1, truckId: "WT001", timeIn: new Date("2024-08-29T08:00"), timeOut: new Date("2024-08-29T10:00"), quantity: 5000 },
-  { id: 2, truckId: "WT002", timeIn: new Date("2024-08-29T11:00"), timeOut: new Date("2024-08-29T13:00"), quantity: 4500 },
-  { id: 3, truckId: "WT003", timeIn: new Date("2024-08-29T09:30"), timeOut: new Date("2024-08-29T11:30"), quantity: 5200 },
-  { id: 4, truckId: "WT004", timeIn: new Date("2024-08-29T12:00"), timeOut: new Date("2024-08-29T14:00"), quantity: 4800 },
-  { id: 5, truckId: "WT005", timeIn: new Date("2024-08-29T14:30"), timeOut: new Date("2024-08-29T16:30"), quantity: 4700 },
-  { id: 6, truckId: "WT006", timeIn: new Date("2024-08-29T10:00"), timeOut: new Date("2024-08-29T12:00"), quantity: 5100 },
-  { id: 7, truckId: "WT007", timeIn: new Date("2024-08-29T13:00"), timeOut: new Date("2024-08-29T15:00"), quantity: 5300 },
-  { id: 8, truckId: "WT008", timeIn: new Date("2024-08-29T07:30"), timeOut: new Date("2024-08-29T09:30"), quantity: 4900 },
-  { id: 9, truckId: "WT009", timeIn: new Date("2024-08-29T15:00"), timeOut: new Date("2024-08-29T17:00"), quantity: 4600 },
-  { id: 10, truckId: "WT010", timeIn: new Date("2024-08-29T08:30"), timeOut: new Date("2024-08-29T10:30"), quantity: 5200 },
-  { id: 11, truckId: "WT011", timeIn: new Date("2024-08-29T11:30"), timeOut: new Date("2024-08-29T13:30"), quantity: 4400 },
-  { id: 12, truckId: "WT012", timeIn: new Date("2024-08-29T09:00"), timeOut: new Date("2024-08-29T11:00"), quantity: 5000 },
-  { id: 13, truckId: "WT013", timeIn: new Date("2024-08-29T12:30"), timeOut: new Date("2024-08-29T14:30"), quantity: 4700 },
-  { id: 14, truckId: "WT014", timeIn: new Date("2024-08-29T10:30"), timeOut: new Date("2024-08-29T12:30"), quantity: 5300 },
-  { id: 15, truckId: "WT015", timeIn: new Date("2024-08-29T13:30"), timeOut: new Date("2024-08-29T15:30"), quantity: 4900 },
-
-];
-
-
 export default function WaterTruck() {
-  const [trucks, setTrucks] = useState<WaterTruck[]>(sampleTrucks);
+  const [trucks, setTrucks] = useState<WaterTruck[]>([]);
   const [editingTruck, setEditingTruck] = useState<WaterTruck | null>(null);
-  const [newTruck, setNewTruck] = useState<Omit<WaterTruck, "id">>({
-    truckId: "",
-    timeIn: new Date(),
-    timeOut: new Date(),
+  const [newTruck, setNewTruck] = useState<WaterTruck>({
+    timeIn: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+    timeOut: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
     quantity: 0,
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const itemsPerPage = 10;
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
-    if (editingTruck) {
-      setEditingTruck({
-        ...editingTruck,
-        [name]: name.includes("time") ? new Date(value) : name === "quantity" ? Number(value) : value,
-      });
-    } else {
-      setNewTruck({
-        ...newTruck,
-        [name]: name.includes("time") ? new Date(value) : name === "quantity" ? Number(value) : value,
-      });
+  useEffect(() => {
+    fetchTrucks();
+  }, []);
+
+  const fetchTrucks = async () => {
+    try {
+      const response = await getAllWatertanker();
+      if (response.error) {
+        throw new Error(response.error);
+      }
+      setTrucks(response);
+    } catch (error) {
+      console.error('Error fetching water trucks:', error);
+      toast.error('Failed to load water trucks');
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (editingTruck) {
-      setTrucks(
-        trucks.map((truck) => (truck.id === editingTruck.id ? editingTruck : truck))
-      );
-      setEditingTruck(null);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    isEditForm: boolean
+  ) => {
+    const { name, value } = e.target;
+    if (isEditForm) {
+      setEditingTruck(prev => ({
+        ...prev!,
+        [name]: name === "quantity" ? Number(value) : value,
+      }));
     } else {
-      setTrucks([...trucks, { id: trucks.length + 1, ...newTruck }]);
-      setNewTruck({
-        truckId: "",
-        timeIn: new Date(),
-        timeOut: new Date(),
-        quantity: 0,
-      });
+      setNewTruck(prev => ({
+        ...prev,
+        [name]: name === "quantity" ? Number(value) : value,
+      }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent, isEditForm: boolean) => {
+    e.preventDefault();
+    try {
+      const truckData = isEditForm ? editingTruck! : newTruck;
+      const formattedTruck = {
+        ...truckData,
+        timeIn: new Date(truckData.timeIn).toISOString(),
+        timeOut: new Date(truckData.timeOut).toISOString(),
+      };
+
+      if (isEditForm && editingTruck?.id) {
+        const response = await updateWatertanker(editingTruck.id, formattedTruck);
+        if (response.error) {
+          throw new Error(response.error);
+        }
+        toast.success('Water truck updated successfully');
+        setEditingTruck(null);
+        setIsDialogOpen(false);
+      } else {
+        const response = await createWatertanker(formattedTruck);
+        if (response.error) {
+          throw new Error(response.error);
+        }
+        toast.success('Water truck added successfully');
+        setNewTruck({
+          timeIn: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+          timeOut: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+          quantity: 0,
+        });
+      }
+      fetchTrucks();
+    } catch (error) {
+      console.error('Error submitting water truck:', error);
+      toast.error('Failed to save water truck');
     }
   };
 
   const handleEdit = (truck: WaterTruck) => {
-    setEditingTruck(truck);
+    setEditingTruck({
+      ...truck,
+      timeIn: format(parseISO(truck.timeIn), "yyyy-MM-dd'T'HH:mm"),
+      timeOut: format(parseISO(truck.timeOut), "yyyy-MM-dd'T'HH:mm"),
+    });
+    setIsDialogOpen(true);
   };
 
-  const handleDelete = (id: number) => {
-    setTrucks(trucks.filter((truck) => truck.id !== id));
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await deleteWatertanker(id);
+      if (response.error) {
+        throw new Error(response.error);
+      }
+      toast.success('Water truck deleted successfully');
+      fetchTrucks();
+    } catch (error) {
+      console.error('Error deleting water truck:', error);
+      toast.error('Failed to delete water truck');
+    }
   };
 
   const filteredTrucks = trucks.filter(
     (truck) =>
-      truck.truckId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      truck.quantity.toString().includes(searchTerm)
+      truck.id?.toString().includes(searchTerm) ||
+      truck.quantity.toString().includes(searchTerm) ||
+      format(parseISO(truck.timeIn), "yyyy-MM-dd").includes(searchTerm) ||
+      format(parseISO(truck.timeOut), "yyyy-MM-dd").includes(searchTerm)
   );
 
   const totalPages = Math.ceil(filteredTrucks.length / itemsPerPage);
@@ -126,57 +527,66 @@ export default function WaterTruck() {
   const TruckForm = ({
     truck,
     onSubmit,
-    isEditing,
+    isEditForm,
   }: {
-    truck: WaterTruck | Omit<WaterTruck, "id">;
+    truck: WaterTruck;
     onSubmit: (e: React.FormEvent) => void;
-    isEditing: boolean;
+    isEditForm: boolean;
   }) => (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <Input
-        name="truckId"
-        placeholder="Truck ID"
-        value={truck.truckId}
-        onChange={handleInputChange}
-        required
-      />
-      <Input
-        name="timeIn"
-        type="datetime-local"
-        value={format(truck.timeIn, "yyyy-MM-dd'T'HH:mm")}
-        onChange={handleInputChange}
-        required
-      />
-      <Input
-        name="timeOut"
-        type="datetime-local"
-        value={format(truck.timeOut, "yyyy-MM-dd'T'HH:mm")}
-        onChange={handleInputChange}
-        required
-      />
-      <Input
-        name="quantity"
-        type="number"
-        placeholder="Quantity (Liters)"
-        value={truck.quantity}
-        onChange={handleInputChange}
-        required
-      />
-      <Button
-        type="submit"
-        className="bg-green-500 hover:bg-green-600 text-white"
-      >
-        {isEditing ? "Update" : "Add"}
-      </Button>
-      {isEditing && (
+    <form onSubmit={(e) => onSubmit(e)} className="space-y-4">
+      <div className="flex items-center space-x-4">
+        <Label htmlFor="timeIn" className="w-1/4">Time In</Label>
+        <Input
+          id="timeIn"
+          name="timeIn"
+          type="datetime-local"
+          value={truck.timeIn}
+          onChange={(e) => handleInputChange(e, isEditForm)}
+          required
+          className="w-3/4"
+        />
+      </div>
+      <div className="flex items-center space-x-4">
+        <Label htmlFor="timeOut" className="w-1/4">Time Out</Label>
+        <Input
+          id="timeOut"
+          name="timeOut"
+          type="datetime-local"
+          value={truck.timeOut}
+          onChange={(e) => handleInputChange(e, isEditForm)}
+          required
+          className="w-3/4"
+        />
+      </div>
+      <div className="flex items-center space-x-4">
+        <Label htmlFor="quantity" className="w-1/4">Quantity (Liters)</Label>
+        <Input
+          id="quantity"
+          name="quantity"
+          type="number"
+          value={truck.quantity}
+          onChange={(e) => handleInputChange(e, isEditForm)}
+          required
+          className="w-3/4"
+        />
+      </div>
+      <div className="flex justify-end space-x-2">
         <Button
-          type="button"
-          onClick={() => setEditingTruck(null)}
-          className="bg-red-500 hover:bg-red-600 text-white ml-2"
+          type="submit"
+          className="bg-green-500 hover:bg-green-600 text-white"
         >
-          Cancel
+          {isEditForm ? "Update" : "Add"}
         </Button>
-      )}
+        {isEditForm && (
+          <Button
+            type="button"
+            onClick={() => setIsDialogOpen(false)}
+            className="bg-red-500 hover:bg-red-600 text-white"
+          >
+            Cancel
+          </Button>
+        )}
+      </div>
     </form>
   );
 
@@ -197,26 +607,18 @@ export default function WaterTruck() {
               </h2>
               <TruckForm
                 truck={newTruck}
-                onSubmit={handleSubmit}
-                isEditing={false}
+                onSubmit={(e) => handleSubmit(e, false)}
+                isEditForm={false}
               />
             </div>
-            {!editingTruck && (
-              <div className="flex justify-center">
-                <Image
-                  src="/watertruck.png"
-                  alt="Water Truck"
-                  width={300}
-                  height={200}
-                />
-              </div>
-            )}
-            {editingTruck && (
-              <div className="mt-2">
-                <h2 className="text-xl font-semibold mb-2 text-blue-700">Edit Water Truck Entry</h2>
-                <TruckForm truck={editingTruck} onSubmit={handleSubmit} isEditing={true} />
-              </div>
-            )}
+            <div className="flex justify-center">
+              <Image
+                src="/watertruck.png"
+                alt="Water Truck"
+                width={300}
+                height={200}
+              />
+            </div>
           </div>
 
           {/* Table Column */}
@@ -237,8 +639,9 @@ export default function WaterTruck() {
               <Table className="w-full">
                 <TableHeader>
                   <TableRow className="bg-blue-100">
-                    <TableHead className="font-semibold">Truck ID</TableHead>
+                    <TableHead className="font-semibold">Date In</TableHead>
                     <TableHead className="font-semibold">Time In</TableHead>
+                    <TableHead className="font-semibold">Date Out</TableHead>
                     <TableHead className="font-semibold">Time Out</TableHead>
                     <TableHead className="font-semibold">Quantity (L)</TableHead>
                     <TableHead className="font-semibold">Actions</TableHead>
@@ -247,12 +650,17 @@ export default function WaterTruck() {
                 <TableBody>
                   {paginatedTrucks.map((truck) => (
                     <TableRow key={truck.id} className="h-8">
-                      <TableCell className="py-1">{truck.truckId}</TableCell>
                       <TableCell className="py-1">
-                        {format(truck.timeIn, "MM/dd/yyyy HH:mm")}
+                        {format(parseISO(truck.timeIn), "MM/dd/yyyy")}
                       </TableCell>
                       <TableCell className="py-1">
-                        {format(truck.timeOut, "MM/dd/yyyy HH:mm")}
+                        {format(parseISO(truck.timeIn), "HH:mm")}
+                      </TableCell>
+                      <TableCell className="py-1">
+                        {format(parseISO(truck.timeOut), "MM/dd/yyyy")}
+                      </TableCell>
+                      <TableCell className="py-1">
+                        {format(parseISO(truck.timeOut), "HH:mm")}
                       </TableCell>
                       <TableCell className="py-1">{truck.quantity}</TableCell>
                       <TableCell className="py-1">
@@ -266,7 +674,7 @@ export default function WaterTruck() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleDelete(truck.id)}
+                          onClick={() => truck.id && handleDelete(truck.id)}
                         >
                           <Trash2 className="w-4 h-4 text-red-500" />
                         </Button>
@@ -304,6 +712,22 @@ export default function WaterTruck() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Edit Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Water Truck Entry</DialogTitle>
+          </DialogHeader>
+          {editingTruck && (
+            <TruckForm
+              truck={editingTruck}
+              onSubmit={(e) => handleSubmit(e, true)}
+              isEditForm={true}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

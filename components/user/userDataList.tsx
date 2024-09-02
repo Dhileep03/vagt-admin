@@ -7,7 +7,7 @@ import { userColumn } from "./column";
 import { UserData } from "@/types";
 import {
     getAllUser
-} from "@/uiconnector/userAction";
+} from "@/action-data/userAction";
 import { useQuery } from "@tanstack/react-query";
 import { ScaleLoader } from "react-spinners";
 import { useSession } from "next-auth/react";
