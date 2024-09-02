@@ -2,13 +2,6 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  GaugeIcon,
-  MountainIcon,
-  RocketIcon,
-  SettingsIcon,
-  ShieldIcon,
-} from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import LandingHeader from "./landingHeader";
 import FeatureCardCarousel from "@/components/common/featureCardCarousel";
@@ -56,7 +49,7 @@ export default function Component() {
       title: "EHS Audits",
       description:
         "These services relate to a wide range of areas - from environmental sustainability and occupational safety to chemical, radiation, and biological controls - that support the Institute's accountability for excellent EHS performance, as well as for legal compliance.",
-      image: "/cleaning.png", 
+      image: "/cleaning.png",
     },
     {
       title: "BCP Management",
@@ -135,7 +128,7 @@ export default function Component() {
       </div>
 
       <main className="flex-1 overflow-y-auto">
-        <section id="home" className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <section id="home" className="w-full py-10 md:py-24 lg:py-32 bg-white">
           <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-12">
             <motion.div
               className="space-y-4"
@@ -172,16 +165,27 @@ export default function Component() {
           </div>
         </section>
 
-        <section id="whyus" className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <section id="whyus" className="w-full py-8 md:py-18 lg:py-28 bg-gray-50">
           <div className="container px-4 md:px-6 lg:px-8">
-            <motion.h2
-              className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-center mb-12 text-blue-900"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              Why Us
-            </motion.h2>
+            <div className="flex flex-col items-center justify-center text-center px-4 py-12">
+              <motion.h2
+                className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-center mb-6 text-blue-900"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                Why Us
+              </motion.h2>
+              <motion.p
+                className="max-w-[600px] text-muted-foreground md:text-xl lg:text-base xl:text-xl mx-auto"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                We at VAGT Security Services Private Limited, a PSARA certified
+                company.
+              </motion.p>
+            </div>
             <motion.div
               className="grid gap-6 lg:grid-cols-3"
               variants={containerVariants}
@@ -221,7 +225,7 @@ export default function Component() {
                 },
               ].map((item, index) => (
                 <motion.div key={index} variants={itemVariants}>
-                  <Card className="border-2 border-blue-200 rounded-lg h-[200px] flex flex-col justify-between relative overflow-hidden group transition-all duration-300 hover:shadow-xl hover:scale-105">
+                  <Card className="border-2 border-blue-200 rounded-lg h-[150px] flex flex-col justify-between relative overflow-hidden group transition-all duration-300 hover:shadow-xl hover:scale-105">
                     <CardHeader
                       className="flex flex-col items-center text-center gap-2 relative z-10 transition-transform duration-500 group-hover:-translate-x-full"
                       style={{
@@ -232,7 +236,7 @@ export default function Component() {
                       <motion.div
                         className="rounded-full bg-blue-100 p-3 text-blue-600"
                         whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration:0.6 }}
                       >
                         {/* {item.icon} */}
                       </motion.div>
@@ -251,11 +255,12 @@ export default function Component() {
         </section>
         <section
           id="features"
-          className="w-full py-12 md:py-24 lg:py-32 bg-white"
+          className="w-full py-8 md:py-18 lg:py-28 bg-white"
         >
-          <div className="container flex flex-col lg:flex-row items-stretch gap-12 px-4 md:px-6">
-            <div className="lg:w-1/4 flex flex-col justify-center">
-              <div className="space-y-2">
+          <div className="container flex flex-col md:flex-row items-center gap-12 px-4 md:px-6">
+            {/* Text Section */}
+            <div className="flex flex-col items-center gap-6 w-full md:w-2/4">
+              <div className="space-y-2 text-center md:text-left">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
                   Our Services
                 </h2>
@@ -265,8 +270,33 @@ export default function Component() {
                 </p>
               </div>
             </div>
-            <div className="lg:w-3/4 w-full flex items-center">
+
+            {/* Carousel Section */}
+            <div className="flex w-full md:w-2/4 items-center justify-center">
               <FeatureCardCarousel features={features} />
+            </div>
+          </div>
+        </section>
+        <section id="whyus" className="w-full py-10 md:py-20 lg:py-30 bg-gray-50">
+          <div className="container px-4 md:px-6 lg:px-8">
+            <div className="flex flex-col items-center justify-center text-center px-4 py-12">
+              <motion.h2
+                className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-center mb-6 text-blue-900"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                Other Services
+              </motion.h2>
+              <motion.p
+                className="max-w-[600px] text-muted-foreground md:text-xl lg:text-base xl:text-xl mx-auto"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                We at VAGT Security Services Private Limited, a PSARA certified
+                company.
+              </motion.p>
             </div>
           </div>
         </section>
