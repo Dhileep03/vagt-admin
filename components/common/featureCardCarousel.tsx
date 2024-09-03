@@ -68,7 +68,7 @@ const FeatureCardCarousel: React.FC<FeatureCardCarouselProps> = ({ features }) =
               onMouseEnter={stopAutoSlide}
               onMouseLeave={startAutoSlide}
             >
-              <Card className="border border-gray-300 rounded-lg h-full max-w-4xl flex flex-row bg-white shadow-xl border-collapse overflow-hidden">
+              <Card className=" rounded-lg h-full max-w-4xl flex flex-row bg-white shadow-xl border-collapse overflow-hidden">
                 <div className="w-1/3 h-full">
                   {feature.image ? (
                     <img
