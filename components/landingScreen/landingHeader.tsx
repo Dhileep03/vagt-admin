@@ -23,8 +23,11 @@ export default function LandingHeader() {
           <Link href="#whyus" className="hover:underline" prefetch={false}>
             Why Us
           </Link>
-          <Link href="#features" className="hover:underline" prefetch={false}>
-            Features
+          <Link href="#services" className="hover:underline" prefetch={false}>
+            Services
+          </Link>
+          <Link href="#About Us" className="hover:underline" prefetch={false}>
+            AboutUs
           </Link>
           <Link href="#contact" className="hover:underline" prefetch={false}>
             Contact
