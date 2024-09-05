@@ -1,5 +1,8 @@
+"use client"
 import React from 'react';
-
+import Image from 'next/image';
+import Lottie from 'lottie-react';
+import lottieJson from '@/public/lottie/hero.json';
 const HomePage = () => {
   return (
     <section className="w-full relative bg-white sm:py-16 ">
@@ -47,11 +50,10 @@ const HomePage = () => {
 
         {/* Image Section */}
         <div className="hidden lg:block lg:w-1/2">
-          <img
-            src="https://via.placeholder.com/600x400"
-            alt="Placeholder"
-            className="object-cover w-full h-full rounded-lg"
-          />
+        <Lottie
+  animationData={lottieJson}
+  className="w-full h-[400px]" // Using Tailwind classes for size
+/>
         </div>
       </div>
     </section>

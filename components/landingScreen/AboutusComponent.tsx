@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 
 const Aboutus = () => {
   return (
-    <div className="bg-gray-50 p-6 rounded-2xl  transition-shadow duration-300 max-w-full lg:px-56">
+    <div id="about" className="bg-gray-50 p-6 rounded-2xl  transition-shadow duration-300 max-w-full lg:px-56">
       <div className="flex flex-col lg:flex-row items-center gap-8">
         <div className="lg:w-2/3 space-y-6">
           <blockquote className="text-2xl sm:text-3xl font-semibold text-gray-800 leading-relaxed">

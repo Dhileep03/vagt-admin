@@ -80,7 +80,7 @@ export default function ServiceSection() {
   ];
 
   return (
-    <div className="container px-4 md:px-6 lg:px-8" ref={ref}>
+    <div id="feature" className="container px-4 md:px-6 lg:px-8" ref={ref}>
       <div className="flex flex-col items-center justify-center text-center px-4 py-12">
         <motion.h2
           className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-center mb-6 text-black"

@@ -9,6 +9,7 @@ import Footer from './FooterComponent'
 
 
 
+
 const landingContainer = () => {
   return (
     <div className="bg-white">

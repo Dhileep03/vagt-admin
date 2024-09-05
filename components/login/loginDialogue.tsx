@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import Lottie from 'lottie-react';
+import lottieJson from '@/public/lottie/a4.json';
 import {
   Card,
   CardContent,
@@ -63,14 +65,10 @@ const LoginDialog = ({ isOpen, onClose }: any) => {
         <div className="flex flex-col md:flex-row">
           {/* Left Column */}
           <div className="w-full md:w-1/2 p-6">
-            <Image
-              src="/path/to/image.jpg"
-              alt="Login Image"
-              layout="responsive"
-              width={500}
-              height={300}
-              className="rounded-lg object-cover"
-            />
+          <Lottie
+  animationData={lottieJson}
+  className="w-full h-[400px]" // Using Tailwind classes for size
+/>
           </div>
           {/* Right Column */}
           <div className="w-full md:w-1/2 p-6">
@@ -92,7 +90,7 @@ const LoginDialog = ({ isOpen, onClose }: any) => {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
-                <Button onClick={generateOtp} disabled={otpSent}>
+                <Button className="bg-black text-white hover:bg-gray-700" onClick={generateOtp} disabled={otpSent}>
                   {otpSent ? 'OTP Sent' : 'Generate OTP'}
                 </Button>
                 {otpSent && (
@@ -109,7 +107,7 @@ const LoginDialog = ({ isOpen, onClose }: any) => {
                 )}
               </CardContent>
               <CardFooter>
-                <Button onClick={handleLogin} disabled={!otpSent || !otp}>
+                <Button className="bg-black text-white hover:bg-gray-700" onClick={handleLogin} disabled={!otpSent || !otp}>
                   Login
                 </Button>
               </CardFooter>
