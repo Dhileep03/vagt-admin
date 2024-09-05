@@ -12,8 +12,8 @@ export const ServiceCard = ({ Icon, title, description }:any) => (
   >
     <Card className="h-full">
       <CardHeader className="flex flex-col items-center">
-        <Icon className="w-12 h-12 text-blue-600 mb-2" />
-        <h3 className="text-xl font-semibold text-blue-900">{title}</h3>
+        <Icon className="w-12 h-12 text-blackmb-2" />
+        <h3 className="text-xl font-semibold text-black">{title}</h3>
       </CardHeader>
       <CardContent>
         <p className="text-muted-foreground text-center">{description}</p>
