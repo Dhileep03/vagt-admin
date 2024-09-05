@@ -1,3 +1,4 @@
+
 import React from 'react'
 import HeroSection from './HeroComponent'
 import Navbar from './NavbarComponent'
@@ -6,8 +7,6 @@ import FeatureSection from './featurecomponent1'
 import AppComponent from './AppComponent'
 import Aboutus from './AboutusComponent'
 import Footer from './FooterComponent'
-
-
 
 
 const landingContainer = () => {
